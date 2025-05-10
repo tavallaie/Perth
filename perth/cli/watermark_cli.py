@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Command line interface for SoundSignature watermarking.
+Command line interface for Perth watermarking.
 """
 import argparse
 import os
@@ -10,16 +10,16 @@ import librosa
 import soundfile as sf
 from typing import Optional, List
 
-from soundsignature.perth_net.perth_net_implicit.perth_watermarker import PerthImplicitWatermarker
-from soundsignature.dummy_watermarker import DummyWatermarker
-from soundsignature.config import get_config
-from soundsignature.utils import load_audio, save_audio, calculate_audio_metrics, plot_audio_comparison
+from perth.perth_net.perth_net_implicit.perth_watermarker import PerthImplicitWatermarker
+from perth.dummy_watermarker import DummyWatermarker
+from perth.config import get_config
+from perth.utils import load_audio, save_audio, calculate_audio_metrics, plot_audio_comparison
 
 
 def parse_args(args: Optional[List[str]] = None) -> argparse.Namespace:
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(
-        description="SoundSignature - Audio Watermarking Tool",
+        description="Perth - Audio Watermarking Tool",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
     

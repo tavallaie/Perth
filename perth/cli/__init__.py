@@ -1,5 +1,5 @@
 """
-Command-line interface for the SoundSignature library.
+Command-line interface for the Perth library.
 """
 from .watermark_cli import main
 

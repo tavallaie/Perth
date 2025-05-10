@@ -1,5 +1,5 @@
 """
-SoundSignature: Audio Watermarking and Detection Library.
+Perth: Audio Watermarking and Detection Library.
 
 This library provides tools and algorithms for embedding and detecting
 watermarks in audio files using various techniques.

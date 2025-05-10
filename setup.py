@@ -14,22 +14,22 @@ bundled_data = [
 ]
 
 setuptools.setup(
-    name="SoundSignature",
+    name="Perth",
     version="1.0.0",
     author="Resemble AI Team",
     author_email="team@resemble.ai",
     description="Audio Watermarking and Detection Library",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/resemble-ai/SoundSignature",
+    url="https://github.com/resemble-ai/Perth",
     keywords=["Audio Watermarking", "Perceptual Watermarking", "Neural Networks", "Audio Processing"],
     project_urls={
-        'Bug Reports': 'https://github.com/resemble-ai/SoundSignature/issues',
-        'Source': 'https://github.com/resemble-ai/SoundSignature',
-        'Documentation': 'https://github.com/resemble-ai/SoundSignature/blob/main/README.md',
+        'Bug Reports': 'https://github.com/resemble-ai/Perth/issues',
+        'Source': 'https://github.com/resemble-ai/Perth',
+        'Documentation': 'https://github.com/resemble-ai/Perth/blob/main/README.md',
     },
     packages=find_packages(),
-    package_data={"soundsignature": bundled_data},
+    package_data={"perth": bundled_data},
     include_package_data=True,
     install_requires=requirements,
     python_requires=">=3.8",
@@ -46,7 +46,7 @@ setuptools.setup(
     ],
     entry_points={
         'console_scripts': [
-            'soundsignature=soundsignature.cli.watermark_cli:main',
+            'perth=perth.cli.watermark_cli:main',
         ],
     },
 )

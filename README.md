@@ -1,10 +1,10 @@
-# SoundSignature
+# Perth
 
-**SoundSignature** is a comprehensive Python library for audio watermarking and detection.
+**Perth** is a comprehensive Python library for audio watermarking and detection.
 
 ## Overview
 
-SoundSignature enables you to embed imperceptible watermarks in audio files and later detect them, even after the audio has undergone various transformations or manipulations. The library implements multiple watermarking techniques including neural network-based approaches.
+Perth enables you to embed imperceptible watermarks in audio files and later detect them, even after the audio has undergone various transformations or manipulations. The library implements multiple watermarking techniques including neural network-based approaches.
 
 ## Features
 
@@ -19,14 +19,14 @@ SoundSignature enables you to embed imperceptible watermarks in audio files and 
 ### From PyPI (Recommended)
 
 ```bash
-pip install SoundSignature
+pip install Perth
 ```
 
 ### From Source
 
 ```bash
-git clone https://github.com/resemble-ai/SoundSignature
-cd SoundSignature
+git clone https://github.com/resemble-ai/Perth
+cd Perth
 pip install -e .
 ```
 
@@ -36,10 +36,10 @@ pip install -e .
 
 ```bash
 # Apply a watermark to an audio file
-soundsignature input.wav -o output.wav
+perth input.wav -o output.wav
 
 # Extract a watermark from an audio file
-soundsignature input.wav --extract
+perth input.wav --extract
 ```
 
 ### Python API Usage
@@ -47,7 +47,7 @@ soundsignature input.wav --extract
 #### Applying a Watermark
 
 ```python
-import soundsignature
+import perth
 import librosa
 import soundfile as sf
 
@@ -55,7 +55,7 @@ import soundfile as sf
 wav, sr = librosa.load("input.wav", sr=None)
 
 # Initialize watermarker
-watermarker = soundsignature.PerthImplicitWatermarker()
+watermarker = perth.PerthImplicitWatermarker()
 
 # Apply watermark
 watermarked_audio = watermarker.apply_watermark(wav, watermark=None, sample_rate=sr)
@@ -67,14 +67,14 @@ sf.write("output.wav", watermarked_audio, sr)
 #### Extracting a Watermark
 
 ```python
-import soundsignature
+import perth
 import librosa
 
 # Load the watermarked audio
 watermarked_audio, sr = librosa.load("output.wav", sr=None)
 
 # Initialize watermarker (same as used for embedding)
-watermarker = soundsignature.PerthImplicitWatermarker()
+watermarker = perth.PerthImplicitWatermarker()
 
 # Extract watermark
 watermark = watermarker.get_watermark(watermarked_audio, sample_rate=sr)
@@ -86,7 +86,7 @@ print(f"Extracted watermark: {watermark}")
 The Perth-Net Implicit watermarker uses a neural network-based approach for embedding and extracting watermarks. It's designed to be robust against various audio manipulations while maintaining high audio quality.
 
 ```python
-from soundsignature.perth_net.perth_net_implicit.perth_watermarker import PerthImplicitWatermarker
+from perth.perth_net.perth_net_implicit.perth_watermarker import PerthImplicitWatermarker
 
 watermarker = PerthImplicitWatermarker(device="cuda")  # Use GPU for faster processing
 ```
@@ -96,7 +96,7 @@ watermarker = PerthImplicitWatermarker(device="cuda")  # Use GPU for faster proc
 A simple placeholder watermarker for testing and demonstration purposes.
 
 ```python
-from soundsignature import DummyWatermarker
+from perth import DummyWatermarker
 
 watermarker = DummyWatermarker()
 ```
@@ -107,7 +107,7 @@ The library includes utilities for evaluating the quality and robustness of wate
 
 ```python
 import librosa
-from soundsignature.utils import calculate_audio_metrics, plot_audio_comparison
+from perth.utils import calculate_audio_metrics, plot_audio_comparison
 
 # Load original and watermarked audio
 original, sr = librosa.load("input.wav", sr=None)

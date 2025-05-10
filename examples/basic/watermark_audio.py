@@ -1,18 +1,18 @@
 #!/usr/bin/env python
 """
-Basic example of how to watermark an audio file using SoundSignature.
+Basic example of how to watermark an audio file using Perth.
 """
 import os
 import argparse
 import numpy as np
 import librosa
 import soundfile as sf
-from soundsignature import PerthImplicitWatermarker
-from soundsignature.utils import calculate_audio_metrics
+from perth import PerthImplicitWatermarker
+from perth.utils import calculate_audio_metrics
 
 def main():
     # Parse command line arguments
-    parser = argparse.ArgumentParser(description="Watermark an audio file with SoundSignature")
+    parser = argparse.ArgumentParser(description="Watermark an audio file with Perth")
     parser.add_argument("input_file", help="Path to the input audio file")
     parser.add_argument("--output", "-o", default=None,
                         help="Path to save the output watermarked audio file")

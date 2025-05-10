@@ -1,5 +1,5 @@
 """
-Configuration handling for SoundSignature library.
+Configuration handling for Perth library.
 """
 import os
 import yaml
@@ -8,7 +8,7 @@ from typing import Dict, Any, Optional
 
 class Config:
     """
-    Configuration management for SoundSignature.
+    Configuration management for Perth.
     
     Handles loading, saving, and accessing configuration settings for the library.
     """
@@ -50,7 +50,7 @@ class Config:
         # Set default models directory
         self._config['perth']['models_dir'] = os.path.join(
             os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-            'soundsignature', 'perth_net', 'pretrained'
+            'perth', 'perth_net', 'pretrained'
         )
         
         # Load user config if provided

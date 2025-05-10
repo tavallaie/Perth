@@ -14,8 +14,8 @@ import matplotlib.pyplot as plt
 from scipy.signal import resample
 from tqdm import tqdm
 
-from soundsignature import PerthImplicitWatermarker
-from soundsignature.utils import calculate_audio_metrics, plot_audio_comparison
+from perth import PerthImplicitWatermarker
+from perth.utils import calculate_audio_metrics, plot_audio_comparison
 
 
 def apply_mp3_compression(audio, sr, output_path, bitrate='128k'):

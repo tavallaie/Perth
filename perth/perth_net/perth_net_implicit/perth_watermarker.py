@@ -4,7 +4,7 @@ from librosa import resample
 
 from .model.perth_net import PerthNet
 from .. import PREPACKAGED_MODELS_DIR
-from soundsignature.watermarker import WatermarkerBase
+from perth.watermarker import WatermarkerBase
 
 
 def _to_tensor(x, device):
