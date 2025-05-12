@@ -1,12 +1,12 @@
 # Perth API Reference
 
-This document provides detailed information about the classes and functions available in the SoundSignature library.
+This document provides detailed information about the classes and functions available in the Perth library.
 
 ## Core Classes
 
 ### WatermarkerBase
 
-`WatermarkerBase` is the abstract base class that all watermarking implementations in SoundSignature extend.
+`WatermarkerBase` is the abstract base class that all watermarking implementations in Perth extend.
 
 ```python
 from perth import WatermarkerBase

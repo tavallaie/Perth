@@ -3,8 +3,8 @@ import numpy as np
 import os
 import tempfile
 
-from soundsignature import DummyWatermarker
-from soundsignature.utils import calculate_audio_metrics
+from perth import DummyWatermarker
+from perth.utils import calculate_audio_metrics
 
 
 class TestDummyWatermarker(unittest.TestCase):
