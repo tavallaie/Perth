@@ -1,4 +1,4 @@
-# SoundSignature API Reference
+# Perth API Reference
 
 This document provides detailed information about the classes and functions available in the SoundSignature library.
 
@@ -9,7 +9,7 @@ This document provides detailed information about the classes and functions avai
 `WatermarkerBase` is the abstract base class that all watermarking implementations in SoundSignature extend.
 
 ```python
-from soundsignature import WatermarkerBase
+from perth import WatermarkerBase
 ```
 
 #### Methods
@@ -45,7 +45,7 @@ from soundsignature import WatermarkerBase
 `PerthImplicitWatermarker` is a neural network-based watermarking implementation that uses the Perth-Net model for embedding and extracting watermarks.
 
 ```python
-from soundsignature import PerthImplicitWatermarker
+from perth import PerthImplicitWatermarker
 ```
 
 #### Constructor
@@ -91,7 +91,7 @@ Inherits all methods from `WatermarkerBase` with the following implementations:
 ### Audio Processing
 
 ```python
-from soundsignature.utils import load_audio, save_audio
+from perth.utils import load_audio, save_audio
 ```
 
 - **load_audio**(audio_path, sr=None)
@@ -117,7 +117,7 @@ from soundsignature.utils import load_audio, save_audio
 ### Analysis and Visualization
 
 ```python
-from soundsignature.utils import calculate_audio_metrics, plot_audio_comparison
+from perth.utils import calculate_audio_metrics, plot_audio_comparison
 ```
 
 - **calculate_audio_metrics**(original, watermarked)
@@ -146,10 +146,10 @@ from soundsignature.utils import calculate_audio_metrics, plot_audio_comparison
 
 ## Command Line Interface
 
-SoundSignature provides a command-line interface through the `soundsignature` command:
+perth provides a command-line interface through the `perth` command:
 
 ```
-soundsignature [OPTIONS] INPUT_FILE
+perth [OPTIONS] INPUT_FILE
 ```
 
 ### Options
