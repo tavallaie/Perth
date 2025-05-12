@@ -16,8 +16,8 @@ bundled_data = [
 setuptools.setup(
     name="Perth",
     version="1.0.0",
-    author="Resemble AI Team",
-    author_email="team@resemble.ai",
+    author="Resemble AI, Aditya",
+    author_email="team@resemble.ai, aditya@resemble.ai",
     description="Audio Watermarking and Detection Library",
     long_description=long_description,
     long_description_content_type="text/markdown",
