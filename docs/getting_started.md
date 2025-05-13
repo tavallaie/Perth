@@ -18,7 +18,7 @@ For GPU acceleration (optional):
 ### Install from PyPI
 
 ```bash
-pip install Perth
+pip install resemble-perth
 ```
 
 ### Install from Source
