@@ -19,7 +19,7 @@ Perth enables you to embed imperceptible watermarks in audio files and later det
 ### From PyPI (Recommended)
 
 ```bash
-pip install Perth
+pip install resemble-perth
 ```
 
 ### From Source
