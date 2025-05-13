@@ -1,3 +1,4 @@
+import os
 import setuptools
 from setuptools import find_packages
 
@@ -5,8 +6,10 @@ from setuptools import find_packages
 with open("README.md", "r", encoding="utf-8") as help_file:
     long_description = help_file.read()
 
-with open("requirements.txt", "r") as f:
-    requirements = f.read().splitlines()
+requirements = []
+if os.path.exists("requirements.txt"):
+    with open("requirements.txt", "r") as f:
+        requirements = f.read().splitlines()
 
 # Model and pretrained data files that should be included in the package
 bundled_data = [
@@ -14,7 +17,7 @@ bundled_data = [
 ]
 
 setuptools.setup(
-    name="Perth",
+    name="resemble-perth",
     version="1.0.0",
     author="Resemble AI, Aditya",
     author_email="team@resemble.ai, aditya@resemble.ai",
