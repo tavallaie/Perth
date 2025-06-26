@@ -1,3 +1,5 @@
+<img width="1029" alt="perth-logo-b" src="https://github.com/user-attachments/assets/787a741f-0883-4a92-8732-8c2594b84a3a" />
+
 # Perth
 
 **Perth** is a comprehensive Python library for audio watermarking and detection.
