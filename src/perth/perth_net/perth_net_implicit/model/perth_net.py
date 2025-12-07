@@ -1,7 +1,7 @@
 import torch
+
 # import torchaudio
 import torch.nn.functional as F
-import numpy as np
 from torch import nn
 
 from ..audio_processor import AudioProcessor
@@ -14,7 +14,14 @@ from .decoder import Decoder
 
 
 def lerp(x, size=None, scale=None):
-    return F.interpolate(x, size=size, scale_factor=scale, mode='linear', align_corners=True, recompute_scale_factor=False)
+    return F.interpolate(
+        x,
+        size=size,
+        scale_factor=scale,
+        mode="linear",
+        align_corners=True,
+        recompute_scale_factor=False,
+    )
 
 
 def random_stretch(x):
@@ -25,7 +32,7 @@ def random_stretch(x):
 
 def _attack(mag, phase, audio_proc):
     # gaussian magspec noise
-    if torch.rand(1).item() < 1/8:
+    if torch.rand(1).item() < 1 / 8:
         peak = mag.mean() + 3 * mag.std()
         r = torch.randn_like(mag) * 0.01 * peak
         mag = mag + r
@@ -47,7 +54,7 @@ def _attack(mag, phase, audio_proc):
     #         phase = phase_
 
     # STFT-iSTFT cycle
-    if torch.rand(1).item() < 1/4 and phase is not None:
+    if torch.rand(1).item() < 1 / 4 and phase is not None:
         # # phase noise
         # if torch.rand(1).item() < 1/3:
         #     phase = phase + torch.randn_like(phase) * 0.01
@@ -63,18 +70,19 @@ def _attack(mag, phase, audio_proc):
         mag, phase = audio_proc.signal_to_magphase(signal)
 
     # random offset (NOTE: do this after phase-dependent attacks)
-    if torch.rand(1).item() < 1/8:
+    if torch.rand(1).item() < 1 / 8:
         i = torch.randint(1, 13, (1,)).item()
         mag = torch.roll(mag, i, dims=2)
 
     # random magspec stretch (NOTE: should be near the end of attacks)
-    if torch.rand(1).item() < 1/8:
+    if torch.rand(1).item() < 1 / 8:
         mag = random_stretch(mag)
 
     # random time masking
     # torchaudio.functional.mask_along_axis(mag, mask_param=, mask_value=mag.min().detach(), axis=2, p=0.05)
 
     return mag
+
 
 class PerthNet(nn.Module):
     """

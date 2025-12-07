@@ -1,4 +1,3 @@
-import torch
 import torch.nn as nn
 
 from . import magmask
@@ -27,13 +26,13 @@ class Encoder(nn.Module):
         mask = magmask(magspec)[:, None]
 
         # crop required region of spectrogram
-        sub_mag = magspec[:, :self.subband]
+        sub_mag = magspec[:, : self.subband]
 
         # encode watermark as spectrogram residual
         res = self.layers(sub_mag) * mask
 
         # add residual
-        magspec[:, :self.subband] += res
+        magspec[:, : self.subband] += res
 
         # return wmarked signal and mask
         return magspec, mask

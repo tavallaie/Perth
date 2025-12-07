@@ -3,11 +3,10 @@ from ..config import PerthConfig
 
 
 class Conv(nn.Module):
-
-    def __init__(self, i, o, k, p='auto', s=1, act=True):
+    def __init__(self, i, o, k, p="auto", s=1, act=True):
         super().__init__()
         assert k % 2 == 1
-        if p == 'auto':
+        if p == "auto":
             assert s == 1
             p = (k - 1) // 2
         self.conv = nn.Conv1d(i, o, k, padding=p, stride=s)
@@ -30,6 +29,6 @@ def compute_subband_freq(config: PerthConfig):
 
 
 def magmask(magspec, p=0.05):
-    s = magspec.sum(dim=1) # (B, T)
-    thresh = s.max(dim=1).values * p # (B,)
-    return (s > thresh[:, None]).float() # (B, T)
+    s = magspec.sum(dim=1)  # (B, T)
+    thresh = s.max(dim=1).values * p  # (B,)
+    return (s > thresh[:, None]).float()  # (B, T)

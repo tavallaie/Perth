@@ -7,7 +7,7 @@ This to maintain padding="same" compatibility with Tensorflow architecture.
 """
 
 import math
-from typing import List, Tuple
+from typing import List
 import torch
 import torch.nn.functional as F
 
@@ -27,25 +27,44 @@ def stream(message):
 
 # Calculate asymmetric TensorFlow-like 'SAME' padding for a convolution
 def get_same_padding_transposed(x: int, k: int, s: int, d: int):
-    return max((x-1) * (s-1) + (k - 1) * d, 0)
+    return max((x - 1) * (s - 1) + (k - 1) * d, 0)
+
 
 def get_same_padding(x: int, k: int, s: int, d: int):
-    return max((math.ceil(x/s) - 1) * s + (k - 1) * d + 1 - x, 0)
+    return max((math.ceil(x / s) - 1) * s + (k - 1) * d + 1 - x, 0)
+
 
 # Dynamically pad input x with 'SAME' padding for conv with specified args
 def pad_same(x, k: List[int], s: List[int], d: List[int] = (1, 1), value: float = 0):
     ih, iw = x.size()[-2:]
-    pad_h, pad_w = get_same_padding(ih, k[0], s[0], d[0]), get_same_padding(iw, k[1], s[1], d[1])
+    pad_h, pad_w = (
+        get_same_padding(ih, k[0], s[0], d[0]),
+        get_same_padding(iw, k[1], s[1], d[1]),
+    )
     if pad_h > 0 or pad_w > 0:
-        x = F.pad(x, [pad_w // 2, pad_w - pad_w // 2, pad_h // 2, pad_h - pad_h // 2], value=value)
+        x = F.pad(
+            x,
+            [pad_w // 2, pad_w - pad_w // 2, pad_h // 2, pad_h - pad_h // 2],
+            value=value,
+        )
     return x
 
-def pad_same_transposed(x, k: List[int], s: List[int], d: List[int] = (1, 1), value: float = 0):
+
+def pad_same_transposed(
+    x, k: List[int], s: List[int], d: List[int] = (1, 1), value: float = 0
+):
     ih, iw = x.size()[-2:]
     # pad_h, pad_w = get_same_padding(ih, k[0], s[0], d[0]), get_same_padding_transposed(iw, k[1], s[1], d[1])
-    pad_h, pad_w = get_same_padding_transposed(ih, k[0], s[0], d[0]), get_same_padding_transposed(iw, k[1], s[1], d[1])
+    pad_h, pad_w = (
+        get_same_padding_transposed(ih, k[0], s[0], d[0]),
+        get_same_padding_transposed(iw, k[1], s[1], d[1]),
+    )
     if pad_h > 0 or pad_w > 0:
-        x = F.pad(x, [pad_w // 2, pad_w - pad_w // 2, pad_h // 2, pad_h - pad_h // 2], value=value)
+        x = F.pad(
+            x,
+            [pad_w // 2, pad_w - pad_w // 2, pad_h // 2, pad_h - pad_h // 2],
+            value=value,
+        )
     return x
 
 
@@ -54,20 +73,23 @@ def normalize(hp, magspec, headroom_db=15):
     magspec = (magspec - min_level_db) / (-min_level_db + headroom_db)
     return magspec
 
+
 def denormalize_spectrogram(hp, magspec, headroom_db=15):
     min_level_db = 20 * np.log10(hp.stft_magnitude_min)
     return magspec * (-min_level_db + headroom_db) + min_level_db
 
+
 def magphase_to_cx(hp, magspec, phases):
     magspec = denormalize_spectrogram(hp, magspec)
-    magspec = 10. ** ((magspec / 20).clip(max=10))
-    phases = torch.exp(1.j * phases)
+    magspec = 10.0 ** ((magspec / 20).clip(max=10))
+    phases = torch.exp(1.0j * phases)
     spectrum = magspec * phases
     return spectrum
 
+
 def cx_to_magphase(hp, spec):
     phase = torch.angle(spec)
-    mag = spec.abs() # (nfreq, T)
+    mag = spec.abs()  # (nfreq, T)
     mag = 20 * torch.log10(mag.clip(hp.stft_magnitude_min))
     mag = normalize(hp, mag)
     return mag, phase
@@ -75,10 +97,11 @@ def cx_to_magphase(hp, spec):
 
 ## Imported from Repo
 
+
 def butter_lowpass(cutoff, sr=16000, order=5):
     nyq = 0.5 * sr
     normal_cutoff = cutoff / nyq
-    b, a = butter(order, normal_cutoff, btype='low', analog=False)
+    b, a = butter(order, normal_cutoff, btype="low", analog=False)
     return b, a
 
 
@@ -101,10 +124,10 @@ def bwj(k, n):
     # s_k  - k-th pole of H(s)
     res = complex(1, 0)
     for m in range(1, n + 1):
-        if (m == k):
+        if m == k:
             continue
         else:
-            res /= (bwsk(k, n) - bwsk(m, n))
+            res /= bwsk(k, n) - bwsk(m, n)
     return res
 
 
@@ -119,15 +142,16 @@ def bwh(n=16, fc=400, fs=16e3, length=25):
         res = complex(0, 0)
         if x >= 0:
             for k in range(1, n + 1):
-                res += (exp(omegaC * x * dt / sqrt(2) * bwsk(k, n)) * bwj(k, n))
+                res += exp(omegaC * x * dt / sqrt(2) * bwsk(k, n)) * bwj(k, n)
         result.append((res).real)
     return result
 
 
 def snr(input_signal, output_signal):
-    Ps = np.sum(np.abs(input_signal ** 2))
+    Ps = np.sum(np.abs(input_signal**2))
     Pn = np.sum(np.abs((input_signal - output_signal) ** 2))
     return 10 * np.log10((Ps / Pn))
+
 
 def parse_hparam_overrides(args):
     hp_instance = default_hp._asdict()
@@ -138,11 +162,11 @@ def parse_hparam_overrides(args):
             param, value = override_item.split(":")
             try:
                 to_param_type = type(getattr(default_hp, param))
-            except:
+            except AttributeError:
                 print(f"Invalid HParam Override: {param}. No matching parameter exists")
                 exit()
-            if to_param_type == bool:
-                value = False if value in ("False","false") else True
+            if to_param_type is bool:
+                value = False if value in ("False", "false") else True
             else:
                 value = to_param_type(value)
             hp_instance[param] = value

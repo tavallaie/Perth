@@ -5,7 +5,7 @@ from torchaudio.transforms import Spectrogram, InverseSpectrogram, TimeStretch
 import numpy as np
 
 from .config import PerthConfig
-from .utils import normalize, magphase_to_cx, cx_to_magphase
+from .utils import magphase_to_cx, cx_to_magphase
 
 
 class AudioProcessor(nn.Module):
@@ -17,7 +17,7 @@ class AudioProcessor(nn.Module):
         self.window_fn = {
             "hamm": torch.hamming_window,
             "hann": torch.hann_window,
-            "kaiser": torch.kaiser_window
+            "kaiser": torch.kaiser_window,
         }[hp.window_fn]
         self.spectrogram = Spectrogram(
             n_fft=hp.n_fft,

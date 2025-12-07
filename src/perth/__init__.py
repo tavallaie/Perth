@@ -16,15 +16,15 @@ except ImportError:
 
 # Make core classes/functions available at the package level
 __all__ = [
-    'WatermarkerBase',
-    'WatermarkingException',
-    'DummyWatermarker',
+    "WatermarkerBase",
+    "WatermarkingException",
+    "DummyWatermarker",
 ]
 
 # Add watermarker implementations if available
 if PerthImplicitWatermarker is not None:
-    __all__.append('PerthImplicitWatermarker')
+    __all__.append("PerthImplicitWatermarker")
 
 # Version information
-__version__ = '1.0.0'
-__author__ = 'Resemble AI Team'
+__version__ = "1.0.0"
+__author__ = "Resemble AI Team"
