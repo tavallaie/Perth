@@ -5,7 +5,6 @@ import tempfile
 import warnings
 from pathlib import Path
 import librosa
-import librosa.filters
 import numpy as np
 import pyrubberband as pyrb
 import soundfile as sf
@@ -18,6 +17,7 @@ logger = logging.getLogger(__name__)
 
 class WatermarkingException(Exception):
     pass
+
 
 class CorruptedAudioException(Exception):
     pass
@@ -33,8 +33,10 @@ def load_wav(fpath, target_sr, res_algo="kaiser_best"):
     """
     bit_depth = sf.SoundFile(str(fpath)).subtype
     if not bit_depth.startswith("PCM"):
-        raise WatermarkingException("Unsupported Audio type for Watermarking. "
-                                    "Only 16 or 24-bit PCM/WAV/AIFF audio files can be watermarked.")
+        raise WatermarkingException(
+            "Unsupported Audio type for Watermarking. "
+            "Only 16 or 24-bit PCM/WAV/AIFF audio files can be watermarked."
+        )
     try:
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
@@ -45,10 +47,13 @@ def load_wav(fpath, target_sr, res_algo="kaiser_best"):
         raise CorruptedAudioException("Failed to load audio file")
 
     if target_sr is not None:
-        assert actual_sr == target_sr, "Loaded audio doesn't have expected sampling rate (%s vs " \
-                                       "%s, resampling_algo=%s)" % (actual_sr, target_sr, res_algo)
+        assert actual_sr == target_sr, (
+            "Loaded audio doesn't have expected sampling rate (%s vs "
+            "%s, resampling_algo=%s)" % (actual_sr, target_sr, res_algo)
+        )
 
     return wav, actual_sr
+
 
 def save_wav(wav, file_or_path, sample_rate: int, subtype="PCM_16"):
     """
@@ -58,7 +63,7 @@ def save_wav(wav, file_or_path, sample_rate: int, subtype="PCM_16"):
 
     # Float32 -> PCM_16 conversion
     if subtype == "PCM_16":
-        range_min, range_max = -2 ** 15, 2 ** 15 - 1
+        range_min, range_max = -(2**15), 2**15 - 1
         wav = (wav * range_max).clip(range_min, range_max).astype(np.int16)
 
     file_or_path = str(file_or_path) if isinstance(file_or_path, Path) else file_or_path
