@@ -7,7 +7,9 @@ readme = { file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.10"
 authors = [
     { name = "Resemble AI", email = "team@resemble.ai" },
-    { name = "Adityu", email = "aditya@resemble.ai" },
+    { name = "Aditya", email = "aditya@resemble.ai" },
+    { name = "John", email = "john@resemble.ai" },
+    { name = "Manmay", email = "manmay@resemble.ai" },
 ]
 keywords = [
     "audio watermarking",
